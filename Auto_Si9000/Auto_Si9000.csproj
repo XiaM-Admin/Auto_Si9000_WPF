@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x86</Platforms>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\内层单线不对地.jpg" />
+    <None Remove="Assets\内层单线对地.jpg" />
+    <None Remove="Assets\内层双线不对地.jpg" />
+    <None Remove="Assets\内层双线对地.jpg" />
+    <None Remove="Assets\外层单线不对地.jpg" />
+    <None Remove="Assets\外层单线对地.jpg" />
+    <None Remove="Assets\外层双线不对地.jpg" />
+    <None Remove="Assets\外层双线对地.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Auto_Si900_Calc\Auto_Si900_Calc.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\内层单线不对地.jpg" />
+    <Resource Include="Assets\内层单线对地.jpg" />
+    <Resource Include="Assets\内层双线不对地.jpg" />
+    <Resource Include="Assets\内层双线对地.jpg" />
+    <Resource Include="Assets\外层单线不对地.jpg" />
+    <Resource Include="Assets\外层单线对地.jpg" />
+    <Resource Include="Assets\外层双线不对地.jpg" />
+    <Resource Include="Assets\外层双线对地.jpg" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,301 @@
+﻿<Window x:Class="Auto_Si9000.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Auto_Si9000"
+        mc:Ignorable="d"
+        Title="Auto_Si9000_C# -XSL" Height="490" Width="1150">
+    <Grid>
+        <TabControl>
+            <!--外层单线不对地-->
+            <TabItem>
+                <HeaderedContentControl.Header>
+                    <StackPanel StackPanel.Orientation="Horizontal">
+                        <TextBlock TextBlock.Padding="0,0,5,0" TextBlock.Text="外层单线不对地" />
+                    </StackPanel>
+                </HeaderedContentControl.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid Width="450">
+                        <TextBlock Text="模型示意图" FontSize="25" Margin="0 15 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                        <Image Margin="0 80 0 0" VerticalAlignment="Top" Source="pack://application:,,,/Assets/外层单线不对地.jpg" />
+                    </Grid>
+                    <StackPanel Margin="20 57 20 20" Grid.Column="1">
+                        <DataGrid MaxHeight="280" FontSize="16" MinColumnWidth="50" Name="Tab1DataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True">
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="MinWidth" Value="50" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="SeaGreen" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
+                        </DataGrid>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Name="Tab1zsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="正算" Click="Tab1zsButton_Click" />
+                            <Button Name="Tab1fsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="反算" Click="Tab1fsButton_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <!--外层单线对地-->
+            <TabItem>
+                <HeaderedContentControl.Header>
+                    <StackPanel StackPanel.Orientation="Horizontal">
+                        <TextBlock TextBlock.Padding="0,0,5,0" TextBlock.Text="外层单线对地" />
+                    </StackPanel>
+                </HeaderedContentControl.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid Width="450">
+                        <TextBlock Text="模型示意图" FontSize="25" Margin="0 15 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                        <Image Margin="0 80 0 0" VerticalAlignment="Top" Source="pack://application:,,,/Assets/外层单线对地.jpg" />
+                    </Grid>
+                    <StackPanel Margin="20 57 20 20" Grid.Column="1">
+                        <DataGrid MaxHeight="280" FontSize="16" MinColumnWidth="50" Name="Tab2DataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True">
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="MinWidth" Value="50" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="SeaGreen" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
+                        </DataGrid>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Name="Tab2zsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="正算" Click="Tab2zsButton_Click" />
+                            <Button Name="Tab2fsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="反算" Click="Tab2fsButton_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <!--内层单线不对地-->
+            <TabItem>
+                <HeaderedContentControl.Header>
+                    <StackPanel StackPanel.Orientation="Horizontal">
+                        <TextBlock TextBlock.Padding="0,0,5,0" TextBlock.Text="内层单线不对地" />
+                    </StackPanel>
+                </HeaderedContentControl.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid Width="450">
+                        <TextBlock Text="模型示意图" FontSize="25" Margin="0 15 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                        <Image Margin="0 80 0 0" VerticalAlignment="Top" Source="pack://application:,,,/Assets/内层单线不对地.jpg" />
+                    </Grid>
+                    <StackPanel Margin="20 57 20 20" Grid.Column="1">
+                        <DataGrid MaxHeight="280" FontSize="16" MinColumnWidth="50" Name="Tab3DataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True">
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="MinWidth" Value="50" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="SeaGreen" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
+                        </DataGrid>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Name="Tab3zsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="正算" Click="Tab3zsButton_Click" />
+                            <Button Name="Tab3fsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="反算" Click="Tab3fsButton_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <!--内层单线对地-->
+            <TabItem>
+                <HeaderedContentControl.Header>
+                    <StackPanel StackPanel.Orientation="Horizontal">
+                        <TextBlock TextBlock.Padding="0,0,5,0" TextBlock.Text="内层单线对地" />
+                    </StackPanel>
+                </HeaderedContentControl.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid Width="450">
+                        <TextBlock Text="模型示意图" FontSize="25" Margin="0 15 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                        <Image Margin="0 80 0 0" VerticalAlignment="Top" Source="pack://application:,,,/Assets/内层单线对地.jpg" />
+                    </Grid>
+                    <StackPanel Margin="20 57 20 20" Grid.Column="1">
+                        <DataGrid MaxHeight="280" FontSize="16" MinColumnWidth="50" Name="Tab4DataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True">
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="MinWidth" Value="50" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="SeaGreen" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
+                        </DataGrid>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Name="Tab4zsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="正算" Click="Tab4zsButton_Click" />
+                            <Button Name="Tab4fsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="反算" Click="Tab4fsButton_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <!--外层双线不对地-->
+            <TabItem>
+                <HeaderedContentControl.Header>
+                    <StackPanel StackPanel.Orientation="Horizontal">
+                        <TextBlock TextBlock.Padding="0,0,5,0" TextBlock.Text="外层双线不对地" />
+                    </StackPanel>
+                </HeaderedContentControl.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid Width="450">
+                        <TextBlock Text="模型示意图" FontSize="25" Margin="0 15 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                        <Image Margin="0 80 0 0" VerticalAlignment="Top" Source="pack://application:,,,/Assets/外层双线不对地.jpg" />
+                    </Grid>
+                    <StackPanel Margin="20 57 20 20" Grid.Column="1">
+                        <DataGrid MaxHeight="280" FontSize="16" MinColumnWidth="50" Name="Tab5DataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True">
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="MinWidth" Value="50" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="SeaGreen" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
+                        </DataGrid>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Name="Tab5zsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="正算" Click="Tab5zsButton_Click" />
+                            <Button Name="Tab5fsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="反算" Click="Tab5fsButton_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <!--外层双线对地-->
+            <TabItem>
+                <HeaderedContentControl.Header>
+                    <StackPanel StackPanel.Orientation="Horizontal">
+                        <TextBlock TextBlock.Padding="0,0,5,0" TextBlock.Text="外层双线对地" />
+                    </StackPanel>
+                </HeaderedContentControl.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid Width="450">
+                        <TextBlock Text="模型示意图" FontSize="25" Margin="0 15 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                        <Image Margin="0 80 0 0" VerticalAlignment="Top" Source="pack://application:,,,/Assets/外层双线对地.jpg" />
+                    </Grid>
+                    <StackPanel Margin="20 57 20 20" Grid.Column="1">
+                        <DataGrid MaxHeight="280" FontSize="16" MinColumnWidth="50" Name="Tab6DataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True">
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="MinWidth" Value="50" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="SeaGreen" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
+                        </DataGrid>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Name="Tab6zsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="正算" Click="Tab6zsButton_Click" />
+                            <Button Name="Tab6fsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="反算" Click="Tab6fsButton_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <!--内层双线不对地-->
+            <TabItem>
+                <HeaderedContentControl.Header>
+                    <StackPanel StackPanel.Orientation="Horizontal">
+                        <TextBlock TextBlock.Padding="0,0,5,0" TextBlock.Text="内层双线不对地" />
+                    </StackPanel>
+                </HeaderedContentControl.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid Width="450">
+                        <TextBlock Text="模型示意图" FontSize="25" Margin="0 15 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                        <Image Margin="0 80 0 0" VerticalAlignment="Top" Source="pack://application:,,,/Assets/内层双线不对地.jpg" />
+                    </Grid>
+                    <StackPanel Margin="20 57 20 20" Grid.Column="1">
+                        <DataGrid MaxHeight="280" FontSize="16" MinColumnWidth="50" Name="Tab7DataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True">
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="MinWidth" Value="50" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="SeaGreen" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
+                        </DataGrid>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Name="Tab7zsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="正算" Click="Tab7zsButton_Click" />
+                            <Button Name="Tab7fsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="反算" Click="Tab7fsButton_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <!--内层双线对地-->
+            <TabItem>
+                <HeaderedContentControl.Header>
+                    <StackPanel StackPanel.Orientation="Horizontal">
+                        <TextBlock TextBlock.Padding="0,0,5,0" TextBlock.Text="内层双线对地" />
+                    </StackPanel>
+                </HeaderedContentControl.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid Width="450">
+                        <TextBlock Text="模型示意图" FontSize="25" Margin="0 15 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                        <Image Margin="0 80 0 0" VerticalAlignment="Top" Source="pack://application:,,,/Assets/内层双线对地.jpg" />
+                    </Grid>
+                    <StackPanel Margin="20 57 20 20" Grid.Column="1">
+                        <DataGrid MaxHeight="280" FontSize="16" MinColumnWidth="50" Name="Tab8DataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True">
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="MinWidth" Value="50" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="SeaGreen" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
+                        </DataGrid>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Name="Tab8zsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="正算" Click="Tab8zsButton_Click" />
+                            <Button Name="Tab8fsButton" Margin="5" Height="20" Padding="15 0 15 0" Content="反算" Click="Tab8fsButton_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
