@@ -11,13 +11,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\内层单线不对地.jpg" />
+    <None Remove="Assets\内层单线不对地-Si9000.jpg" />
+    <None Remove="Assets\内层单线对地-si9000.jpg" />
     <None Remove="Assets\内层单线对地.jpg" />
+    <None Remove="Assets\内层双线不对地-si9000.jpg" />
     <None Remove="Assets\内层双线不对地.jpg" />
+    <None Remove="Assets\内层双线对地-si9000.jpg" />
     <None Remove="Assets\内层双线对地.jpg" />
+    <None Remove="Assets\外层单线不对地-si9000.jpg" />
     <None Remove="Assets\外层单线不对地.jpg" />
+    <None Remove="Assets\外层单线对地-si9000.jpg" />
     <None Remove="Assets\外层单线对地.jpg" />
+    <None Remove="Assets\外层双线不对地-si9000.jpg" />
     <None Remove="Assets\外层双线不对地.jpg" />
+    <None Remove="Assets\外层双线对地-si9000.jpg" />
     <None Remove="Assets\外层双线对地.jpg" />
   </ItemGroup>
 
@@ -31,12 +43,20 @@
 
   <ItemGroup>
     <Resource Include="Assets\内层单线不对地.jpg" />
+    <Resource Include="Assets\内层单线不对地-Si9000.jpg" />
+    <Resource Include="Assets\内层单线对地-si9000.jpg" />
     <Resource Include="Assets\内层单线对地.jpg" />
+    <Resource Include="Assets\内层双线不对地-si9000.jpg" />
     <Resource Include="Assets\内层双线不对地.jpg" />
+    <Resource Include="Assets\内层双线对地-si9000.jpg" />
     <Resource Include="Assets\内层双线对地.jpg" />
+    <Resource Include="Assets\外层单线不对地-si9000.jpg" />
     <Resource Include="Assets\外层单线不对地.jpg" />
+    <Resource Include="Assets\外层单线对地-si9000.jpg" />
     <Resource Include="Assets\外层单线对地.jpg" />
+    <Resource Include="Assets\外层双线不对地-si9000.jpg" />
     <Resource Include="Assets\外层双线不对地.jpg" />
+    <Resource Include="Assets\外层双线对地-si9000.jpg" />
     <Resource Include="Assets\外层双线对地.jpg" />
   </ItemGroup>
 

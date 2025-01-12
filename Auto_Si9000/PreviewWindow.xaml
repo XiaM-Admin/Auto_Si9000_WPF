@@ -1,0 +1,23 @@
+<Window x:Class="Auto_Si9000.PreviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="预览图 -右键复制图片到剪贴板"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        MaxWidth="900"
+        MaxHeight="450"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Image Name="PreviewImage"
+               Stretch="Uniform"
+               MaxWidth="880"
+               MaxHeight="412">
+            <Image.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="复制图片"
+                              Click="CopyImage_Click" />
+                </ContextMenu>
+            </Image.ContextMenu>
+        </Image>
+    </Grid>
+</Window> 

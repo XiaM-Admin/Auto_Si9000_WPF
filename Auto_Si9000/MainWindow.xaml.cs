@@ -1,5 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
+using Point = System.Windows.Point;
+using FontFamily = System.Windows.Media.FontFamily;
 
 namespace Auto_Si9000
 {
@@ -483,6 +490,673 @@ namespace Auto_Si9000
                 MessageBox.Show(Warring_Message, "警告", MessageBoxButton.OK, MessageBoxImage.Warning);
             else
                 MessageBox.Show($"反算完成！\r\n一共{_tab8DataGridItemsSource.Count}行数据。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        /// <summary>
+        /// 外层单线不对地数据预览
+        /// </summary>
+        private void Tab1DataGrid_PreviewData(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = Tab1DataGrid.SelectedItem as 外层单线不对地_Model;
+            if (selectedItem != null)
+            {
+                selectedItem.Calculate_Zo();
+                //selectedItem.Zo 重新刷新到源中，更新UI显示的数据
+                Tab1DataGrid.Items.Refresh();
+                try
+                {
+                    // 加载原始图片
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri("pack://application:,,,/Assets/外层单线不对地-si9000.jpg");
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+
+                    // 创建可写的位图
+                    var drawingVisual = new DrawingVisual();
+                    using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+                    {
+                        // 绘制原始图片
+                        drawingContext.DrawImage(bitmap, new Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
+
+                        // 设置文本格式
+                        var typeface = new Typeface(
+                            new FontFamily("Segoe UI"),
+                            FontStyles.Normal,
+                            FontWeights.Normal,
+                            FontStretches.Normal);
+                        var brush = new SolidColorBrush(Colors.Black);
+
+                        // 按特定顺序获取属性值，并计算W2
+                        double w2 = ((selectedItem.W1 / 0.0254) - 1) * 0.0254;
+                        var values = new List<string>
+                        {
+                            selectedItem.H1.ToString("F4"),
+                            selectedItem.Er1.ToString("F4"),
+                            selectedItem.W1.ToString("F4"),
+                            w2.ToString("F4"),
+                            selectedItem.T1.ToString("F4"),
+                            selectedItem.C1.ToString("F4"),
+                            selectedItem.C2.ToString("F4"),
+                            selectedItem.CEr.ToString("F4"),
+                            selectedItem.Zo.ToString("F2") ?? "0.00",
+                        };
+
+                        // 在指定坐标绘制文本
+                        int[] yCoordinates = { 16, 40, 64, 88, 112, 136, 160, 184, 234 };
+                        int[] xCoordinate = { 578, 578, 578, 578, 578, 578, 578, 578, 585 };
+                        float fontSize = 13;
+
+                        for (int i = 0; i < values.Count; i++)
+                        {
+                            if (!string.IsNullOrEmpty(values[i]))
+                            {
+                                var formattedText = new FormattedText(
+                                    values[i],
+                                    System.Globalization.CultureInfo.CurrentCulture,
+                                    FlowDirection.LeftToRight,
+                                    typeface,
+                                    fontSize,
+                                    brush,
+                                    VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+                                drawingContext.DrawText(formattedText, new Point(xCoordinate[i], yCoordinates[i]));
+                            }
+                        }
+                    }
+
+                    // 创建RenderTargetBitmap
+                    var renderBitmap = new RenderTargetBitmap(
+                        bitmap.PixelWidth, bitmap.PixelHeight,
+                        96, 96, PixelFormats.Pbgra32);
+                    renderBitmap.Render(drawingVisual);
+
+                    // 显示预览窗口
+                    var previewWindow = new PreviewWindow(renderBitmap);
+                    previewWindow.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"生成预览图时出错：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 外层单线对地数据预览
+        /// </summary>
+        private void Tab2DataGrid_PreviewData(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = Tab2DataGrid.SelectedItem as 外层单线对地_Model;
+            if (selectedItem != null)
+            {
+                selectedItem.Calculate_Zo();
+                //selectedItem.Zo 重新刷新到源中，更新UI显示的数据
+                Tab2DataGrid.Items.Refresh();
+                try
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri("pack://application:,,,/Assets/外层单线对地-si9000.jpg");
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+
+                    var drawingVisual = new DrawingVisual();
+                    using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+                    {
+                        drawingContext.DrawImage(bitmap, new Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
+
+                        var typeface = new Typeface(
+                            new FontFamily("Segoe UI"),
+                            FontStyles.Normal,
+                            FontWeights.Normal,
+                            FontStretches.Normal);
+                        var brush = new SolidColorBrush(Colors.Black);
+
+                        double w2 = ((selectedItem.W1 / 0.0254) - 1) * 0.0254;
+                        var values = new List<string>
+                        {
+                            selectedItem.H1.ToString("F4"),
+                            selectedItem.Er1.ToString("F4"),
+                            selectedItem.W1.ToString("F4"),
+                            w2.ToString("F4"),
+                            selectedItem.D1.ToString("F4"),
+                            selectedItem.T1.ToString("F4"),
+                            selectedItem.C1.ToString("F4"),
+                            selectedItem.C2.ToString("F4"),
+                            selectedItem.CEr.ToString("F4"),
+                            selectedItem.Zo.ToString("F2") ?? "0.00",
+                        };
+
+                        int[] yCoordinates = { 16, 40, 64, 88, 112, 136, 160, 184, 208, 255 };
+                        int[] xCoordinate = { 578, 578, 578, 578, 578, 578, 578, 578, 578, 585 };
+                        float fontSize = 13;
+
+                        for (int i = 0; i < values.Count; i++)
+                        {
+                            if (!string.IsNullOrEmpty(values[i]))
+                            {
+                                var formattedText = new FormattedText(
+                                    values[i],
+                                    System.Globalization.CultureInfo.CurrentCulture,
+                                    FlowDirection.LeftToRight,
+                                    typeface,
+                                    fontSize,
+                                    brush,
+                                    VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+                                drawingContext.DrawText(formattedText, new Point(xCoordinate[i], yCoordinates[i]));
+                            }
+                        }
+                    }
+
+                    var renderBitmap = new RenderTargetBitmap(
+                        bitmap.PixelWidth, bitmap.PixelHeight,
+                        96, 96, PixelFormats.Pbgra32);
+                    renderBitmap.Render(drawingVisual);
+
+                    var previewWindow = new PreviewWindow(renderBitmap);
+                    previewWindow.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"生成预览图时出错：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 内层单线对地数据预览
+        /// </summary>
+        private void Tab4DataGrid_PreviewData(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = Tab4DataGrid.SelectedItem as 内层单线对地_Model;
+            if (selectedItem != null)
+            {
+                selectedItem.Calculate_Zo();
+                //selectedItem.Zo 重新刷新到源中，更新UI显示的数据
+                Tab4DataGrid.Items.Refresh();
+                try
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri("pack://application:,,,/Assets/内层单线对地-si9000.jpg");
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+
+                    var drawingVisual = new DrawingVisual();
+                    using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+                    {
+                        drawingContext.DrawImage(bitmap, new Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
+
+                        var typeface = new Typeface(
+                            new FontFamily("Segoe UI"),
+                            FontStyles.Normal,
+                            FontWeights.Normal,
+                            FontStretches.Normal);
+                        var brush = new SolidColorBrush(Colors.Black);
+
+                        double w2 = ((selectedItem.W1 / 0.0254) - 1) * 0.0254;
+                        var values = new List<string>
+                        {
+                            selectedItem.H1.ToString("F4"),
+                            selectedItem.Er1.ToString("F4"),
+                            selectedItem.H2.ToString("F4"),
+                            selectedItem.Er2.ToString("F4"),
+                            selectedItem.W1.ToString("F4"),
+                            w2.ToString("F4"),
+                            selectedItem.D1.ToString("F4"),
+                            selectedItem.T1.ToString("F4"),
+                            selectedItem.Zo.ToString("F2") ?? "0.00",
+                        };
+                        int[] yCoordinates = { 16, 40, 64, 88, 112, 136, 160, 184, 232 };
+                        int[] xCoordinate = { 578, 578, 578, 578, 578, 578, 578, 578, 585 };
+                        float fontSize = 13;
+
+                        for (int i = 0; i < values.Count; i++)
+                        {
+                            if (!string.IsNullOrEmpty(values[i]))
+                            {
+                                var formattedText = new FormattedText(
+                                    values[i],
+                                    System.Globalization.CultureInfo.CurrentCulture,
+                                    FlowDirection.LeftToRight,
+                                    typeface,
+                                    fontSize,
+                                    brush,
+                                    VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+                                drawingContext.DrawText(formattedText, new Point(xCoordinate[i], yCoordinates[i]));
+                            }
+                        }
+                    }
+
+                    var renderBitmap = new RenderTargetBitmap(
+                        bitmap.PixelWidth, bitmap.PixelHeight,
+                        96, 96, PixelFormats.Pbgra32);
+                    renderBitmap.Render(drawingVisual);
+
+                    var previewWindow = new PreviewWindow(renderBitmap);
+                    previewWindow.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"生成预览图时出错：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 外层双线不对地数据预览
+        /// </summary>
+        private void Tab5DataGrid_PreviewData(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = Tab5DataGrid.SelectedItem as 外层双线不对地_Model;
+            if (selectedItem != null)
+            {
+                selectedItem.Calculate_Zo();
+                //selectedItem.Zo 重新刷新到源中，更新UI显示的数据
+                Tab5DataGrid.Items.Refresh();
+                try
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri("pack://application:,,,/Assets/外层双线不对地-si9000.jpg");
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+
+                    var drawingVisual = new DrawingVisual();
+                    using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+                    {
+                        drawingContext.DrawImage(bitmap, new Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
+
+                        var typeface = new Typeface(
+                            new FontFamily("Segoe UI"),
+                            FontStyles.Normal,
+                            FontWeights.Normal,
+                            FontStretches.Normal);
+                        var brush = new SolidColorBrush(Colors.Black);
+
+                        double w2 = ((selectedItem.W1 / 0.0254) - 1) * 0.0254;
+                        var values = new List<string>
+                        {
+                            selectedItem.H1.ToString("F4"),
+                            selectedItem.Er1.ToString("F4"),
+                            selectedItem.W1.ToString("F4"),
+                            w2.ToString("F4"),
+                            selectedItem.S1.ToString("F4"),
+                            selectedItem.T1.ToString("F4"),
+                            selectedItem.C1.ToString("F4"),
+                            selectedItem.C2.ToString("F4"),
+                            selectedItem.C3.ToString("F4"),
+                            selectedItem.CEr.ToString("F4"),
+                            selectedItem.Zo.ToString("F2") ?? "0.00"
+                        };
+                        int[] yCoordinates = { 16, 40, 64, 88, 112, 136, 160, 184, 208, 232, 279 };
+                        int[] xCoordinate = { 578, 578, 578, 578, 578, 578, 578, 578, 578, 578, 585 };
+                        float fontSize = 13;
+
+                        for (int i = 0; i < values.Count; i++)
+                        {
+                            if (!string.IsNullOrEmpty(values[i]))
+                            {
+                                var formattedText = new FormattedText(
+                                    values[i],
+                                    System.Globalization.CultureInfo.CurrentCulture,
+                                    FlowDirection.LeftToRight,
+                                    typeface,
+                                    fontSize,
+                                    brush,
+                                    VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+                                drawingContext.DrawText(formattedText, new Point(xCoordinate[i], yCoordinates[i]));
+                            }
+                        }
+                    }
+
+                    var renderBitmap = new RenderTargetBitmap(
+                        bitmap.PixelWidth, bitmap.PixelHeight,
+                        96, 96, PixelFormats.Pbgra32);
+                    renderBitmap.Render(drawingVisual);
+
+                    var previewWindow = new PreviewWindow(renderBitmap);
+                    previewWindow.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"生成预览图时出错：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 外层双线对地数据预览
+        /// </summary>
+        private void Tab6DataGrid_PreviewData(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = Tab6DataGrid.SelectedItem as 外层双线对地_Model;
+            if (selectedItem != null)
+            {
+                selectedItem.Calculate_Zo();
+                //selectedItem.Zo 重新刷新到源中，更新UI显示的数据
+                Tab6DataGrid.Items.Refresh();
+                try
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri("pack://application:,,,/Assets/外层双线对地-si9000.jpg");
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+
+                    var drawingVisual = new DrawingVisual();
+                    using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+                    {
+                        drawingContext.DrawImage(bitmap, new Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
+
+                        var typeface = new Typeface(
+                            new FontFamily("Segoe UI"),
+                            FontStyles.Normal,
+                            FontWeights.Normal,
+                            FontStretches.Normal);
+                        var brush = new SolidColorBrush(Colors.Black);
+
+                        double w2 = ((selectedItem.W1 / 0.0254) - 1) * 0.0254;
+                        var values = new List<string>
+                        {
+                            selectedItem.H1.ToString("F4"),
+                            selectedItem.Er1.ToString("F4"),
+                            selectedItem.W1.ToString("F4"),
+                            w2.ToString("F4"),
+                            selectedItem.S1.ToString("F4"),
+                            selectedItem.D1.ToString("F4"),
+                            selectedItem.T1.ToString("F4"),
+                            selectedItem.C1.ToString("F4"),
+                            selectedItem.C2.ToString("F4"),
+                            selectedItem.C3.ToString("F4"),
+                            selectedItem.CEr.ToString("F4"),
+                            selectedItem.Zo.ToString("F2") ?? "0.00",
+                        };
+                        int[] yCoordinates = { 16, 40, 64, 88, 112, 136, 160, 184, 208, 232, 256, 303 };
+                        int[] xCoordinate = { 578, 578, 578, 578, 578, 578, 578, 578, 578, 578, 578, 585 };
+                        float fontSize = 13;
+
+                        for (int i = 0; i < values.Count; i++)
+                        {
+                            if (!string.IsNullOrEmpty(values[i]))
+                            {
+                                var formattedText = new FormattedText(
+                                    values[i],
+                                    System.Globalization.CultureInfo.CurrentCulture,
+                                    FlowDirection.LeftToRight,
+                                    typeface,
+                                    fontSize,
+                                    brush,
+                                    VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+                                drawingContext.DrawText(formattedText, new Point(xCoordinate[i], yCoordinates[i]));
+                            }
+                        }
+                    }
+
+                    var renderBitmap = new RenderTargetBitmap(
+                        bitmap.PixelWidth, bitmap.PixelHeight,
+                        96, 96, PixelFormats.Pbgra32);
+                    renderBitmap.Render(drawingVisual);
+
+                    var previewWindow = new PreviewWindow(renderBitmap);
+                    previewWindow.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"生成预览图时出错：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 内层双线不对地数据预览
+        /// </summary>
+        private void Tab7DataGrid_PreviewData(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = Tab7DataGrid.SelectedItem as 内层双线不对地_Model;
+            if (selectedItem != null)
+            {
+                selectedItem.Calculate_Zo();
+                //selectedItem.Zo 重新刷新到源中，更新UI显示的数据
+                Tab7DataGrid.Items.Refresh();
+                try
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri("pack://application:,,,/Assets/内层双线不对地-si9000.jpg");
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+
+                    var drawingVisual = new DrawingVisual();
+                    using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+                    {
+                        drawingContext.DrawImage(bitmap, new Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
+
+                        var typeface = new Typeface(
+                            new FontFamily("Segoe UI"),
+                            FontStyles.Normal,
+                            FontWeights.Normal,
+                            FontStretches.Normal);
+                        var brush = new SolidColorBrush(Colors.Black);
+
+                        double w2 = ((selectedItem.W1 / 0.0254) - 1) * 0.0254;
+                        var values = new List<string>
+                        {
+                            selectedItem.H1.ToString("F4"),
+                            selectedItem.Er1.ToString("F4"),
+                            selectedItem.H2.ToString("F4"),
+                            selectedItem.Er2.ToString("F4"),
+                            selectedItem.W1.ToString("F4"),
+                            w2.ToString("F4"),
+                            selectedItem.S1.ToString("F4"),
+                            selectedItem.T1.ToString("F4"),
+                            selectedItem.Zo.ToString("F2") ?? "0.00",
+                        };
+
+                        int[] yCoordinates = { 16, 40, 64, 88, 112, 136, 160, 184, 231 };
+                        int[] xCoordinate = { 578, 578, 578, 578, 578, 578, 578, 578, 585 };
+                        float fontSize = 13;
+
+                        for (int i = 0; i < values.Count; i++)
+                        {
+                            if (!string.IsNullOrEmpty(values[i]))
+                            {
+                                var formattedText = new FormattedText(
+                                    values[i],
+                                    System.Globalization.CultureInfo.CurrentCulture,
+                                    FlowDirection.LeftToRight,
+                                    typeface,
+                                    fontSize,
+                                    brush,
+                                    VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+                                drawingContext.DrawText(formattedText, new Point(xCoordinate[i], yCoordinates[i]));
+                            }
+                        }
+                    }
+
+                    var renderBitmap = new RenderTargetBitmap(
+                        bitmap.PixelWidth, bitmap.PixelHeight,
+                        96, 96, PixelFormats.Pbgra32);
+                    renderBitmap.Render(drawingVisual);
+
+                    var previewWindow = new PreviewWindow(renderBitmap);
+                    previewWindow.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"生成预览图时出错：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 内层双线对地数据预览
+        /// </summary>
+        private void Tab8DataGrid_PreviewData(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = Tab8DataGrid.SelectedItem as 内层双线对地_Model;
+            if (selectedItem != null)
+            {
+                selectedItem.Calculate_Zo();
+                //selectedItem.Zo 重新刷新到源中，更新UI显示的数据
+                Tab8DataGrid.Items.Refresh();
+                try
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri("pack://application:,,,/Assets/内层双线对地-si9000.jpg");
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+
+                    var drawingVisual = new DrawingVisual();
+                    using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+                    {
+                        drawingContext.DrawImage(bitmap, new Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
+
+                        var typeface = new Typeface(
+                            new FontFamily("Segoe UI"),
+                            FontStyles.Normal,
+                            FontWeights.Normal,
+                            FontStretches.Normal);
+                        var brush = new SolidColorBrush(Colors.Black);
+
+                        double w2 = ((selectedItem.W1 / 0.0254) - 1) * 0.0254;
+                        var values = new List<string>
+                        {
+                            selectedItem.H1.ToString("F4"),
+                            selectedItem.Er1.ToString("F4"),
+                            selectedItem.H2.ToString("F4"),
+                            selectedItem.Er2.ToString("F4"),
+                            selectedItem.W1.ToString("F4"),
+                            w2.ToString("F4"),
+                            selectedItem.S1.ToString("F4"),
+                            selectedItem.D1.ToString("F4"),
+                            selectedItem.T1.ToString("F4"),
+                            selectedItem.Zo.ToString("F2") ?? "0.00",
+                        };
+                        int[] yCoordinates = { 16, 40, 64, 88, 112, 136, 160, 184, 208, 256 };
+                        int[] xCoordinate = { 578, 578, 578, 578, 578, 578, 578, 578, 578, 585 };
+                        float fontSize = 13;
+
+                        for (int i = 0; i < values.Count; i++)
+                        {
+                            if (!string.IsNullOrEmpty(values[i]))
+                            {
+                                var formattedText = new FormattedText(
+                                    values[i],
+                                    System.Globalization.CultureInfo.CurrentCulture,
+                                    FlowDirection.LeftToRight,
+                                    typeface,
+                                    fontSize,
+                                    brush,
+                                    VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+                                drawingContext.DrawText(formattedText, new Point(xCoordinate[i], yCoordinates[i]));
+                            }
+                        }
+                    }
+
+                    var renderBitmap = new RenderTargetBitmap(
+                        bitmap.PixelWidth, bitmap.PixelHeight,
+                        96, 96, PixelFormats.Pbgra32);
+                    renderBitmap.Render(drawingVisual);
+
+                    var previewWindow = new PreviewWindow(renderBitmap);
+                    previewWindow.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"生成预览图时出错：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 内层单线不对地数据预览
+        /// </summary>
+        private void Tab3DataGrid_PreviewData(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = Tab3DataGrid.SelectedItem as 内层单线不对地_Model;
+            if (selectedItem != null)
+            {
+                selectedItem.Calculate_Zo();
+                //selectedItem.Zo 重新刷新到源中，更新UI显示的数据
+                Tab3DataGrid.Items.Refresh();
+                try
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri("pack://application:,,,/Assets/内层单线不对地-Si9000.jpg");
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+
+                    var drawingVisual = new DrawingVisual();
+                    using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+                    {
+                        drawingContext.DrawImage(bitmap, new Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
+
+                        var typeface = new Typeface(
+                            new FontFamily("Segoe UI"),
+                            FontStyles.Normal,
+                            FontWeights.Normal,
+                            FontStretches.Normal);
+                        var brush = new SolidColorBrush(Colors.Black);
+
+                        double w2 = ((selectedItem.W1 / 0.0254) - 1) * 0.0254;
+                        var values = new List<string>
+                        {
+                            selectedItem.H1.ToString("F4"),
+                            selectedItem.Er1.ToString("F4"),
+                            selectedItem.H2.ToString("F4"),
+                            selectedItem.Er2.ToString("F4"),
+                            selectedItem.W1.ToString("F4"),
+                            w2.ToString("F4"),
+                            selectedItem.T1.ToString("F4"),
+                            selectedItem.Zo.ToString("F2") ?? "0.00",
+                        };
+
+                        int[] yCoordinates = { 16, 40, 64, 88, 112, 136, 160, 208 };
+                        int[] xCoordinate = { 578, 578, 578, 578, 578, 578, 578, 585 };
+
+                        float fontSize = 13;
+
+                        for (int i = 0; i < values.Count; i++)
+                        {
+                            if (!string.IsNullOrEmpty(values[i]))
+                            {
+                                var formattedText = new FormattedText(
+                                    values[i],
+                                    System.Globalization.CultureInfo.CurrentCulture,
+                                    FlowDirection.LeftToRight,
+                                    typeface,
+                                    fontSize,
+                                    brush,
+                                    VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+                                drawingContext.DrawText(formattedText, new Point(xCoordinate[i], yCoordinates[i]));
+                            }
+                        }
+                    }
+
+                    var renderBitmap = new RenderTargetBitmap(
+                        bitmap.PixelWidth, bitmap.PixelHeight,
+                        96, 96, PixelFormats.Pbgra32);
+                    renderBitmap.Render(drawingVisual);
+
+                    var previewWindow = new PreviewWindow(renderBitmap);
+                    previewWindow.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"生成预览图时出错：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
     }
 }
